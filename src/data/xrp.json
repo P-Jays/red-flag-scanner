@@ -1,0 +1,27 @@
+{
+  "token": "XRP",
+  "score": "3/5 Red Flags Detected",
+  "flags": [
+    {
+      "title": "No Audit Report",
+      "status": "red",
+      "retail": "No public audit linked.",
+      "analyst": "No smart contract to audit. XRP relies on centralized validator set.",
+      "source": "https://ripple.com/xrp/"
+    },
+    {
+      "title": "Centralized Token Supply",
+      "status": "yellow",
+      "retail": "Ripple controls large share of supply.",
+      "analyst": "Ripple controls 45% of XRP in escrow. Escrow unlocks monthly.",
+      "source": "https://messari.io/asset/xrp"
+    },
+    {
+      "title": "GitHub Activity",
+      "status": "green",
+      "retail": "Active development.",
+      "analyst": "GitHub active. Most commits by Ripple employees.",
+      "source": "https://github.com/ripple"
+    }
+  ]
+}

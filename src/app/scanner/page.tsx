@@ -1,0 +1,32 @@
+// src/app/scanner/page.tsx
+
+'use client'
+
+import { useRouter } from 'next/navigation'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+
+export default function ScannerPage() {
+  const [token, setToken] = useState('')
+  const router = useRouter()
+
+  const handleScan = () => {
+    // In real logic: pass token as param, use API
+    // For now: simulate XRP only
+    router.push('/result')
+  }
+
+  return (
+    <main className="flex flex-col items-center justify-center min-h-screen gap-4">
+      <h1 className="text-2xl font-bold">🔎 Red Flag Scanner</h1>
+      <Input
+        placeholder="Enter token name or website (e.g. XRP)"
+        value={token}
+        onChange={(e) => setToken(e.target.value)}
+        className="w-[300px]"
+      />
+      <Button onClick={handleScan}>Scan Now</Button>
+    </main>
+  )
+}
