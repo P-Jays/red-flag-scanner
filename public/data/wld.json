@@ -1,0 +1,27 @@
+{
+  "token": "Worldcoin (WLD)",
+  "score": "🔴 4 out of 10 flags triggered",
+  "flags": [
+    {
+      "title": "Biometric Privacy Concerns",
+      "status": "red",
+      "retail": "The project collects iris scans, raising serious privacy issues.",
+      "analyst": "While OpenAI-related, it lacks independent biometric audits.",
+      "source": "https://worldcoin.org/privacy"
+    },
+    {
+      "title": "No Audit Report",
+      "status": "red",
+      "retail": "Smart contract audits not published or verified.",
+      "analyst": "Despite high-profile backing, no audit PDF or audit dashboard is publicly available.",
+      "source": "https://worldcoin.org/audit"
+    },
+    {
+      "title": "Token Unlock Schedule Hidden",
+      "status": "yellow",
+      "retail": "You can’t clearly find when tokens unlock for insiders.",
+      "analyst": "Tokenomics shows a large reserve, but vesting timelines are unclear and change frequently.",
+      "source": "https://worldcoin.org/tokenomics"
+    }
+  ]
+}

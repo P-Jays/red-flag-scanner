@@ -11,11 +11,10 @@ export default function ScannerPage() {
   const [token, setToken] = useState('')
   const router = useRouter()
 
-  const handleScan = () => {
-    // In real logic: pass token as param, use API
-    // For now: simulate XRP only
-    router.push('/result')
-  }
+const handleScan = () => {
+  if (!token) return
+  router.push(`/result?token=${token.toLowerCase()}`)
+} 
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-4">
