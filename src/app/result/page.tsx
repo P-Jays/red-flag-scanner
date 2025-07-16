@@ -1,9 +1,10 @@
-'use client';
-
-import dynamic from 'next/dynamic';
-
-const ResultClient = dynamic(() => import('./ResultClient'), { ssr: false });
+import { Suspense } from 'react';
+import ResultClient from './ResultClient';
 
 export default function Page() {
-  return <ResultClient />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResultClient />
+    </Suspense>
+  );
 }
