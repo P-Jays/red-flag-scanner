@@ -6,10 +6,23 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+type ScanResult = {
+  token: string;
+  score: string;
+  flags: {
+    title: string;
+    status: "red" | "yellow" | "green";
+    retail: string;
+    analyst?: string;
+    source?: string;
+  }[];
+};
+
+
 export default function ResultPage() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "xrp";
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<ScanResult | null>(null);
   const [error, setError] = useState("");
   const [showSources, setShowSources] = useState(false);
   const sources = data?.flags
