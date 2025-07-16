@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type ScanResult = {
   token: string;
@@ -48,7 +48,6 @@ export default function ResultPage() {
   }
 
   return (
-    <Suspense>
     <main className="max-w-screen-md mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-2">🧪 Scan Result: {data.token}</h1>
       <p className="text-gray-600 mb-4">{data.score}</p>
@@ -114,6 +113,5 @@ export default function ResultPage() {
         </ul>
       )}
     </main>
-    </Suspense>
   );
 }
