@@ -5,7 +5,7 @@
 import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Suspense, useState } from 'react'
+import { useState } from 'react'
 
 export default function ScannerPage() {
   const [token, setToken] = useState('')
@@ -17,7 +17,6 @@ const handleScan = () => {
 } 
 
   return (
-  <Suspense>
     <main className="flex flex-col items-center justify-center min-h-screen gap-4">
       <h1 className="text-2xl font-bold">🔎 Red Flag Scanner</h1>
       <Input
@@ -28,6 +27,5 @@ const handleScan = () => {
       />
       <Button onClick={handleScan}>Scan Now</Button>
     </main>
-  </Suspense>
   )
 }
