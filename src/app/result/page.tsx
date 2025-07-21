@@ -35,8 +35,10 @@ setToken(urlToken);
 }, []);
 
 const sources = data?.flags
-? [new Set(data.flags.map((flag) => flag.source).filter(Boolean))]
-: [];
+  ? Array.from(
+      new Set(data.flags.map((flag) => flag.source).filter((s): s is string => !!s))
+    )
+  : [];
 
 useEffect(() => {
 if (token) {
