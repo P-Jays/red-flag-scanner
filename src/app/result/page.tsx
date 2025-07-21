@@ -3,8 +3,8 @@
 import { Button } from “@/components/ui/button”;
 import { Card, CardContent } from “@/components/ui/card”;
 import Link from “next/link”;
-import { useSearchParams } from “next/navigation”;
-import { useEffect, useState, Suspense } from “react”;
+import { useRouter } from “next/navigation”;
+import { useEffect, useState } from “react”;
 
 type ScanResult = {
 token: string;
@@ -18,18 +18,28 @@ source?: string;
 }[];
 };
 
-function ResultContent() {
-const searchParams = useSearchParams();
-const token = searchParams.get(“token”) || “xrp”;
+export default function ResultPage() {
+const router = useRouter();
+const [token, setToken] = useState<string>(“xrp”);
 const [data, setData] = useState<ScanResult | null>(null);
 const [error, setError] = useState(””);
 const [showSources, setShowSources] = useState(false);
+
+// Get token from URL on mount
+useEffect(() => {
+if (typeof window !== ‘undefined’) {
+const urlParams = new URLSearchParams(window.location.search);
+const urlToken = urlParams.get(‘token’) || ‘xrp’;
+setToken(urlToken);
+}
+}, []);
 
 const sources = data?.flags
 ? […new Set(data.flags.map((flag) => flag.source).filter(Boolean))]
 : [];
 
 useEffect(() => {
+if (token) {
 fetch(`/data/${token}.json`)
 .then((res) => {
 if (!res.ok) throw new Error(“Token not found”);
@@ -37,6 +47,7 @@ return res.json();
 })
 .then((json) => setData(json))
 .catch((err) => setError(err.message));
+}
 }, [token]);
 
 if (error) {
@@ -51,6 +62,7 @@ return (
 <main className="max-w-screen-md mx-auto px-4 py-8">
 <h1 className="text-2xl font-bold mb-2">🧪 Scan Result: {data.token}</h1>
 <p className="text-gray-600 mb-4">{data.score}</p>
+
 
   <div className="space-y-4">
     {data.flags.map((flag, index) => {
@@ -104,15 +116,7 @@ return (
     </ul>
   )}
 </main>
-);
-}
 
-export const dynamic = 'force-dynamic';
 
-export default function ResultPage() {
-return (
-<Suspense fallback={<div className="p-4 text-gray-500">Loading…</div>}>
-<ResultContent />
-</Suspense>
 );
 }
