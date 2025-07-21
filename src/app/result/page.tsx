@@ -39,16 +39,14 @@ export default function ResultPage() {
       .catch((err) => setError(err.message));
   }, [token]);
 
-  if (error) {
-    return <div className="p-4 text-red-600 font-semibold">{error}</div>;
-  }
-
-  if (!data) {
-    return <div className="p-4 text-gray-500">Loading scan result...</div>;
-  }
 
   return (
     <Suspense>
+    { error ? <div className="p-4 text-red-600 font-semibold">{error}</div>; :""}
+
+    { !data ? <div className="p-4 text-gray-500">Loading scan result...</div>; : ""}
+
+
     <main className="max-w-screen-md mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-2">🧪 Scan Result: {data.token}</h1>
       <p className="text-gray-600 mb-4">{data.score}</p>
