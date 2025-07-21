@@ -19,7 +19,7 @@ source?: string;
 };
 
 export default function ResultPage() {
-const router = useRouter();
+// const router = useRouter();
 const [token, setToken] = useState<string>("xrp");
 const [data, setData] = useState<ScanResult | null>(null);
 const [error, setError] = useState("");
