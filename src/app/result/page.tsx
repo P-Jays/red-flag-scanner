@@ -1,17 +1,17 @@
 "use client";
 
-import { Button } from “@/components/ui/button”;
-import { Card, CardContent } from “@/components/ui/card”;
-import Link from “next/link”;
-import { useRouter } from “next/navigation”;
-import { useEffect, useState } from “react”;
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type ScanResult = {
 token: string;
 score: string;
 flags: {
 title: string;
-status: “red” | “yellow” | “green”;
+status: "red" | "yellow" | "green";
 retail: string;
 analyst?: string;
 source?: string;
@@ -20,16 +20,16 @@ source?: string;
 
 export default function ResultPage() {
 const router = useRouter();
-const [token, setToken] = useState<string>(“xrp”);
+const [token, setToken] = useState<string>("xrp");
 const [data, setData] = useState<ScanResult | null>(null);
-const [error, setError] = useState(””);
+const [error, setError] = useState("");
 const [showSources, setShowSources] = useState(false);
 
 // Get token from URL on mount
 useEffect(() => {
-if (typeof window !== ‘undefined’) {
+if (typeof window !== 'undefined') {
 const urlParams = new URLSearchParams(window.location.search);
-const urlToken = urlParams.get(‘token’) || ‘xrp’;
+const urlToken = urlParams.get('token') || 'xrp';
 setToken(urlToken);
 }
 }, []);
@@ -42,7 +42,7 @@ useEffect(() => {
 if (token) {
 fetch(`/data/${token}.json`)
 .then((res) => {
-if (!res.ok) throw new Error(“Token not found”);
+if (!res.ok) throw new Error("Token not found");
 return res.json();
 })
 .then((json) => setData(json))
