@@ -107,6 +107,8 @@ return (
 );
 }
 
+export const dynamic = 'force-dynamic';
+
 export default function ResultPage() {
 return (
 <Suspense fallback={<div className="p-4 text-gray-500">Loading…</div>}>
