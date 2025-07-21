@@ -35,7 +35,7 @@ setToken(urlToken);
 }, []);
 
 const sources = data?.flags
-? [...new Set(data.flags.map((flag) => flag.source).filter(Boolean))]
+? [new Set(data.flags.map((flag) => flag.source).filter(Boolean))]
 : [];
 
 useEffect(() => {
