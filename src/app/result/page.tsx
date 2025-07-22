@@ -113,7 +113,7 @@ export default function ResultPage() {
                 : "border-green-500 bg-green-100";
 
             return (
-              <Card key={index} className={`border-l-4 ${colorBorder}`}>
+              <Card key={index} className={`border-l-4 ${colorBorder} animate-fade-in-up`}>
                 <CardContent className="p-4 space-y-1">
                   <h2 className="font-semibold">{flag.title}</h2>
                   {/* <p className="text-sm text-muted-foreground">{flag.retail}</p> */}
