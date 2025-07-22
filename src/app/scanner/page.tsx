@@ -25,7 +25,7 @@ const handleScan = () => {
         onChange={(e) => setToken(e.target.value)}
         className="w-[300px]"
       />
-      <Button onClick={handleScan}>Scan Now</Button>
+      <Button variant="default" onClick={handleScan}>Scan Now</Button>
     </main>
   )
 }
