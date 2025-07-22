@@ -65,7 +65,14 @@ export default function ResultPage() {
   }
 
   if (!data) {
-    return <div className="p-4 text-gray-500">Loading scan result…</div>;
+    return (
+      <main className="flex justify-center items-center h-screen text-gray-500">
+        <div className="text-center space-y-2 animate-pulse">
+          <div className="text-2xl">🔍 Scanning Token…</div>
+          <div className="text-sm">Please wait while we analyze red flags.</div>
+        </div>
+      </main>
+    );
   }
 
   return (
@@ -151,6 +158,37 @@ export default function ResultPage() {
             ))}
           </ul>
         )}
+
+        <p className="text-sm mt-6 text-gray-500 text-center">
+          💬 Got suggestions? Help us improve by filling out the{" "}
+          <a
+            href="https://tally.so/r/YOUR-FORM-ID"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-600"
+          >
+            feedback form
+          </a>
+          , or reach out on{" "}
+          <a
+            href="https://twitter.com/pjonchain"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-600"
+          >
+            Twitter
+          </a>{" "}
+          or{" "}
+          <a
+            href="https://linkedin.com/in/kelvin-prajnawi-7b5851177"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-blue-600"
+          >
+            LinkedIn
+          </a>
+          .
+        </p>
       </main>
     </div>
   );
