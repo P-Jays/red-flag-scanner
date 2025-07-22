@@ -1,0 +1,34 @@
+{
+  "token": "SUI",
+  "score": "3/5 Red Flags Detected",
+  "flags": [
+    {
+      "title": "No Audit Report",
+      "status": "red",
+      "retail": "No easily found public audit linked on Sui’s website.",
+      "analyst": "Mysten Labs has not published formal smart contract audits on Sui Move framework. Security relies on protocol design and validator honesty.",
+      "source": "https://www.sui.io/"
+    },
+    {
+      "title": "Early Unlock Risk",
+      "status": "red",
+      "retail": "Large token unlocks could impact the price.",
+      "analyst": "SUI had over 50% of its supply allocated to insiders and early contributors. Unlock schedule raised concerns of VC-driven volatility.",
+      "source": "https://messari.io/asset/sui"
+    },
+    {
+      "title": "GitHub Activity",
+      "status": "yellow",
+      "retail": "Looks active, but unclear how decentralized the devs are.",
+      "analyst": "Majority of development is led by Mysten Labs. GitHub shows solid activity but mostly from core team, not a distributed ecosystem.",
+      "source": "https://github.com/MystenLabs/sui"
+    },
+    {
+      "title": "High Performance VM",
+      "status": "green",
+      "retail": "SUI claims to be fast, cheap and scalable.",
+      "analyst": "Sui Move and parallel execution design offers real-time finality under ideal conditions. Performance benchmarks are promising.",
+      "source": "https://docs.sui.io/learn"
+    }
+  ]
+}
