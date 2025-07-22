@@ -1,0 +1,34 @@
+{
+  "token": "SOL",
+  "score": "2/5 Red Flags Detected",
+  "flags": [
+    {
+      "title": "Validator Centralization Risk",
+      "status": "red",
+      "retail": "Solana's validator set is still relatively centralized.",
+      "analyst": "~30–40% of voting power is controlled by fewer than 10 validators, raising concerns during network events.",
+      "source": "https://messari.io/report/state-of-solana-q1-2023"
+    },
+    {
+      "title": "Frequent Network Outages",
+      "status": "yellow",
+      "retail": "Solana has suffered multiple network halts in the past.",
+      "analyst": "Solana experienced full mainnet outages in Jan 2022, Sept 2022, and Feb 2023 due to block congestion and forking.",
+      "source": "https://www.coindesk.com/tech/2023/02/25/solana-mainnet-suffers-performance-degradation/"
+    },
+    {
+      "title": "Token Unlocks & VC Influence",
+      "status": "yellow",
+      "retail": "Some say VCs got early access to a big share of SOL tokens.",
+      "analyst": "~48% of SOL supply was allocated to insiders (VCs, team, foundation), causing concern for long-term distribution fairness.",
+      "source": "https://cryptosec.info/sol-token/"
+    },
+    {
+      "title": "GitHub Activity",
+      "status": "green",
+      "retail": "Solana has active open-source development.",
+      "analyst": "Solana Foundation and Labs maintain multiple active GitHub repos with frequent commits.",
+      "source": "https://github.com/solana-labs/solana"
+    }
+  ]
+}
