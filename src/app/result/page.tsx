@@ -24,6 +24,16 @@ export default function ResultPage() {
   // const router = useRouter();
   const [token, setToken] = useState<string>("xrp");
   const [data, setData] = useState<ScanResult | null>(null);
+  const calculateTrustScore = (flags: ScanResult["flags"]) => {
+    let score = 5;
+    for (const flag of flags) {
+      if (flag.status === "red") score -= 2;
+      else if (flag.status === "yellow") score -= 1;
+      else if (flag.status === "green") score += 1;
+    }
+    return Math.max(1, Math.min(score, 10));
+  };
+  const trustScore = data ? calculateTrustScore(data.flags) : null;
   const [error, setError] = useState("");
   const [showSources, setShowSources] = useState(false);
   const [isAnalyst, setIsAnalyst] = useState(false);
@@ -45,7 +55,7 @@ export default function ResultPage() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
-      const urlToken = urlParams.get("token") || "xrp";
+      const urlToken = urlParams.get("token") || "";
       setToken(urlToken);
     }
   }, []);
@@ -133,6 +143,22 @@ export default function ResultPage() {
           <span className="text-green-600 font-medium">{greenCount} Green</span>{" "}
           Flags
         </div>
+        {trustScore && (
+          <div className="mb-6 text-lg font-semibold text-center">
+            🔎 Trust Score:{" "}
+            <span
+              className={
+                trustScore <= 3
+                  ? "text-red-600"
+                  : trustScore <= 6
+                  ? "text-yellow-600"
+                  : "text-green-600"
+              }
+            >
+              {trustScore} / 10
+            </span>
+          </div>
+        )}
         <div className="space-y-4">
           {data.flags.map((flag, index) => {
             const colorBorder =
