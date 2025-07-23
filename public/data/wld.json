@@ -1,27 +1,27 @@
 {
-  "token": "Worldcoin (WLD)",
-  "score": "🔴 4 out of 10 flags triggered",
+  "token": "WLD",
+  "score": "1 Red, 2 Yellow",
   "flags": [
     {
-      "title": "Biometric Privacy Concerns",
+      "title": "Biometric Data Collection",
       "status": "red",
-      "retail": "The project collects iris scans, raising serious privacy issues.",
-      "analyst": "While OpenAI-related, it lacks independent biometric audits.",
-      "source": "https://worldcoin.org/privacy"
+      "retail": "Requires iris scan. Privacy concern.",
+      "analyst": "Decentralized ID tied to sensitive biometric data.",
+      "source": "https://worldcoin.org"
     },
     {
-      "title": "No Audit Report",
-      "status": "red",
-      "retail": "Smart contract audits not published or verified.",
-      "analyst": "Despite high-profile backing, no audit PDF or audit dashboard is publicly available.",
-      "source": "https://worldcoin.org/audit"
-    },
-    {
-      "title": "Token Unlock Schedule Hidden",
+      "title": "Governance Clarity",
       "status": "yellow",
-      "retail": "You can’t clearly find when tokens unlock for insiders.",
-      "analyst": "Tokenomics shows a large reserve, but vesting timelines are unclear and change frequently.",
-      "source": "https://worldcoin.org/tokenomics"
+      "retail": "Unclear who controls decision making.",
+      "analyst": "No DAO yet. Core team has majority control.",
+      "source": "https://docs.worldcoin.org"
+    },
+    {
+      "title": "Token Unlock Schedule",
+      "status": "yellow",
+      "retail": "Vesting not explained clearly.",
+      "analyst": "Large share unlocks in early phases.",
+      "source": "https://messari.io/asset/worldcoin"
     }
   ]
 }
