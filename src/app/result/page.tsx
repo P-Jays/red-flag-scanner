@@ -34,6 +34,20 @@ export default function ResultPage() {
     return Math.max(1, Math.min(score, 10));
   };
   const trustScore = data ? calculateTrustScore(data.flags) : null;
+  const getScoreExplanation = (score: number) => {
+    if (score <= 2) {
+      return "⚠️ This project raises multiple critical red flags. Proceed with extreme caution.";
+    } else if (score <= 4) {
+      return "🟡 This project has some concerning issues. Review carefully before engaging.";
+    } else if (score <= 6) {
+      return "🟠 Moderate trust level. Flags are present, but not severe.";
+    } else if (score <= 8) {
+      return "🟢 Relatively safe. Minor flags found, but overall structure seems solid.";
+    } else {
+      return "✅ Strong project — no major red flags detected.";
+    }
+  };
+
   const [error, setError] = useState("");
   const [showSources, setShowSources] = useState(false);
   const [isAnalyst, setIsAnalyst] = useState(false);
@@ -157,6 +171,26 @@ export default function ResultPage() {
             >
               {trustScore} / 10
             </span>
+            <div className="w-full bg-gray-200 rounded h-2 mb-6">
+              <div
+                className={`h-2 rounded transition-all duration-300 ${
+                  trustScore <= 3
+                    ? "bg-red-500"
+                    : trustScore <= 6
+                    ? "bg-yellow-500"
+                    : "bg-green-500"
+                }`}
+                style={{ width: `${trustScore * 10}%` }}
+              ></div>
+            </div>
+            <p className="text-xs text-muted-foreground text-center">
+              Lower score = higher risk based on detected red flags
+            </p>
+            {trustScore && (
+              <p className="text-sm text-muted-foreground mb-6 text-center italic">
+                {getScoreExplanation(trustScore)}
+              </p>
+            )}
           </div>
         )}
         <div className="space-y-4">
