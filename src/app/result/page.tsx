@@ -53,6 +53,17 @@ export default function ResultPage() {
   const [isAnalyst, setIsAnalyst] = useState(false);
   const handleToggle = (checked: boolean) => {
     setIsAnalyst(checked);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (checked) {
+      urlParams.set("mode", "analyst");
+    } else {
+      urlParams.delete("mode");
+    }
+    const newRelativePathQuery = `${
+      window.location.pathname
+    }?${urlParams.toString()}`;
+    window.history.replaceState(null, "", newRelativePathQuery);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const redCount = data?.flags.filter(
@@ -70,7 +81,11 @@ export default function ResultPage() {
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
       const urlToken = urlParams.get("token") || "";
+      const modeParam = urlParams.get("mode");
       setToken(urlToken);
+      if (modeParam === "analyst") {
+        setIsAnalyst(true);
+      }
     }
   }, []);
 
