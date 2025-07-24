@@ -7,6 +7,18 @@ import Link from "next/link";
 // import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
+// import ReactToPrint from "react-to-print";
+// import PrintableResult from "@/components/PrintableResult"; // adjust path
+
+const handleCopyLink = () => {
+  const url = typeof window !== "undefined" ? window.location.href : "";
+  navigator.clipboard.writeText(url);
+  toast("📎 Link copied!", {
+    description: "You can now share this scan result.",
+    duration: 2500,
+  });
+};
 
 type ScanResult = {
   token: string;
@@ -315,6 +327,13 @@ export default function ResultPage() {
             </ul>
           )}
         </div>
+        <Button
+          onClick={handleCopyLink}
+          variant="secondary"
+          className="text-sm mt-4 mx-auto block"
+        >
+          📎 Copy Report Link
+        </Button>
 
         <Card className="mt-10 bg-muted/30 text-sm text-muted-foreground text-center p-4 border border-gray-200 shadow-sm rounded-xl">
           <p className="mb-2">💬 Got suggestions? Help us improve:</p>
