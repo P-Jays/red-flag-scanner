@@ -136,10 +136,10 @@ export default function ResultPage() {
           isAnalyst ? "bg-blue-50" : ""
         }`}
       >
-        <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-          🧪 Scan Result: {data.token.toUpperCase()}
+        <h1 className="text-3xl font-bold text-center mb-2">
+          🔍Scan Result: {data.token.toUpperCase()}
         </h1>
-        <p className="text-sm text-muted-foreground mb-1">{data.score}</p>
+        <p className="text-muted-foreground text-center mb-6">{data.score}</p>
         <div className="flex items-center gap-2 mb-6">
           <Switch checked={isAnalyst} onCheckedChange={handleToggle} />
           {/* <span className="text-sm text-gray-600">
@@ -163,7 +163,7 @@ export default function ResultPage() {
         )} */}
 
         <div className="text-sm text-muted-foreground mb-4">
-          🧾 Summary:{" "}
+          Summary:{" "}
           <span className="text-red-500 font-medium">{redCount} Red</span> •{" "}
           <span className="text-yellow-600 font-medium">
             {yellowCount} Yellow
@@ -172,7 +172,7 @@ export default function ResultPage() {
           <span className="text-green-600 font-medium">{greenCount} Green</span>{" "}
           Flags
         </div>
-        {trustScore && (
+        {/* {trustScore && (
           <div className="mb-6 text-lg font-semibold text-center">
             🔎 Trust Score:{" "}
             <span
@@ -207,7 +207,43 @@ export default function ResultPage() {
               </p>
             )}
           </div>
+        )} */}
+        {trustScore && (
+          <div className="mb-4 text-center">
+            <p className="text-lg font-semibold">
+              Trust Score:{" "}
+              <span
+                className={
+                  trustScore <= 3
+                    ? "text-red-600"
+                    : trustScore <= 6
+                    ? "text-yellow-600"
+                    : "text-green-600"
+                }
+              >
+                {trustScore} / 10
+              </span>
+            </p>
+
+            <div className="w-full h-2 bg-gray-200 rounded mt-2 mb-2">
+              <div
+                className={`h-2 rounded transition-all duration-300 ${
+                  trustScore <= 3
+                    ? "bg-red-500"
+                    : trustScore <= 6
+                    ? "bg-yellow-500"
+                    : "bg-green-500"
+                }`}
+                style={{ width: `${trustScore * 10}%` }}
+              ></div>
+            </div>
+
+            <p className="text-sm italic text-muted-foreground">
+              {getScoreExplanation(trustScore)}
+            </p>
+          </div>
         )}
+
         <div className="space-y-4">
           {data.flags.map((flag, index) => {
             const colorBorder =
@@ -218,15 +254,26 @@ export default function ResultPage() {
                 : "border-green-500 bg-green-100";
 
             return (
+              // <Card
+              //   key={index}
+              //   className={`border-l-4 ${colorBorder} animate-fade-in-up`}
+              // >
+              //   <CardContent className="p-4 space-y-1">
+              //     <h2 className="font-semibold">{flag.title}</h2>
+              //     {/* <p className="text-sm text-muted-foreground">{flag.retail}</p> */}
+              //     <p className="text-sm text-muted-foreground">
+              //       {isAnalyst && flag.analyst ? flag.analyst : flag.retail}
+              //     </p>
+              //   </CardContent>
+              // </Card>
               <Card
                 key={index}
-                className={`border-l-4 ${colorBorder} animate-fade-in-up`}
+                className={`border-l-4 shadow-sm ${colorBorder} bg-white`}
               >
-                <CardContent className="p-4 space-y-1">
-                  <h2 className="font-semibold">{flag.title}</h2>
-                  {/* <p className="text-sm text-muted-foreground">{flag.retail}</p> */}
-                  <p className="text-sm text-muted-foreground">
-                    {isAnalyst && flag.analyst ? flag.analyst : flag.retail}
+                <CardContent className="p-4 space-y-2">
+                  <h2 className="font-semibold text-base">{flag.title}</h2>
+                  <p className="text-sm text-gray-700">
+                    {isAnalyst ? flag.analyst : flag.retail}
                   </p>
                 </CardContent>
               </Card>
@@ -242,61 +289,30 @@ export default function ResultPage() {
           </Link>
         </div>
 
-        {/* <Button
-          variant="link"
-          className="text-sm"
-          onClick={() => setShowSources(!showSources)}
-        >
-          {showSources ? "Hide Sources" : "Show Sources"}
-        </Button> 
-        
-
-        {showSources && (
-          <ul className="text-xs mt-2 text-gray-500 space-y-1 list-disc list-inside">
-            {sources.map((url) => (
-              <li key={url}>
-                <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline"
-                >
-                  {url}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )} 
-        */}
-        <div className="mt-8">
+        <div className="mt-10 border-t pt-6">
           <Button
-            variant="outline"
+            variant="link"
             className="text-sm"
             onClick={() => setShowSources(!showSources)}
           >
-            {showSources ? "Hide Sources 🔽" : "Show Sources 📚"}
+            {showSources ? "Hide Sources" : "Show Sources"}
           </Button>
 
           {showSources && (
-            <Card className="mt-4 p-4 bg-muted/50">
-              <h3 className="font-semibold text-sm mb-2 text-muted-foreground">
-                🔗 References
-              </h3>
-              <ul className="text-xs space-y-2 list-disc list-inside text-blue-700">
-                {sources.map((url) => (
-                  <li key={url}>
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline break-words"
-                    >
-                      {url}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+            <ul className="text-xs mt-2 text-gray-500 space-y-1 list-disc list-inside">
+              {sources.map((url) => (
+                <li key={url}>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    {url}
+                  </a>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
 
