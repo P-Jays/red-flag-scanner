@@ -1,4 +1,6 @@
-export const metadata = {
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
   title: "Red Flag Scanner — Crypto Trust Score",
   description: "Instantly see trust scores and red flags for any crypto token.",
   openGraph: {
@@ -8,7 +10,7 @@ export const metadata = {
     siteName: "Red Flag Scanner",
     images: [
       {
-        url: "/og/default.png", // Replace with your image
+        url: "/og/default.png",
         width: 1200,
         height: 630,
         alt: "Red Flag Scanner Preview",
@@ -23,3 +25,11 @@ export const metadata = {
     images: ["/og/default.png"],
   },
 };
+
+export default function ResultLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
+}
