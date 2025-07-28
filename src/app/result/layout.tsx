@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     siteName: "Red Flag Scanner",
     images: [
       {
-        url: "/og/default.png",
+        url: "/api/og/xrp", // Dynamic route
         width: 1200,
         height: 630,
         alt: "Red Flag Scanner Preview",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Red Flag Scanner — Crypto Trust Score",
     description: "Instantly see trust scores and red flags for any crypto token.",
-    images: ["/og/default.png"],
+    images: ["/api/og/xrp"],
   },
 };
 
