@@ -2,8 +2,8 @@ import { ImageResponse } from "@vercel/og";
 
 export const runtime = "edge";
 
-export async function GET(req: Request, { params }: { params: { token: string } }) {
-  const token = params.token.toUpperCase();
+export async function GET(req: Request, context: { params: { token: string } }) {
+  const token = context.params.token.toUpperCase();
 
   // Example: Fetch trust score from your JSON
   const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/data/${token.toLowerCase()}.json`);
@@ -32,7 +32,9 @@ export async function GET(req: Request, { params }: { params: { token: string } 
           style={{ marginBottom: "20px" }}
         />
         <h1 style={{ fontSize: "64px", margin: "0" }}>{token}</h1>
-        <p style={{ fontSize: "40px", margin: "10px 0" }}>Trust Score: {trustScore}/10</p>
+        <p style={{ fontSize: "40px", margin: "10px 0" }}>
+          Trust Score: {trustScore}/10
+        </p>
         <p style={{ fontSize: "28px", opacity: 0.7 }}>Red Flag Scanner — MVP</p>
       </div>
     ),
