@@ -1,15 +1,22 @@
 import { ImageResponse } from "@vercel/og";
-import { NextRequest } from 'next/server';
+import type { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
 export async function GET(req: NextRequest, context: { params: { token: string } }) {
   const token = context.params.token.toUpperCase();
 
-  // Example: Fetch trust score from your JSON
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/data/${token.toLowerCase()}.json`);
-  const data = await res.json();
-  const trustScore = data.trustScore || "N/A";
+  // Example: fetch trust score or use fallback
+  let trustScore = "N/A";
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/data/${token.toLowerCase()}.json`
+    );
+    const data = await res.json();
+    trustScore = data.trustScore || "N/A";
+  } catch {
+    trustScore = "N/A";
+  }
 
   return new ImageResponse(
     (
