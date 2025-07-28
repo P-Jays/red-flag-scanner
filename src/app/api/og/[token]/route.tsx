@@ -1,8 +1,9 @@
 import { ImageResponse } from "@vercel/og";
+import { NextRequest } from 'next/server';
 
 export const runtime = "edge";
 
-export async function GET(req: Request, context: { params: { token: string } }) {
+export async function GET(req: NextRequest, context: { params: { token: string } }) {
   const token = context.params.token.toUpperCase();
 
   // Example: Fetch trust score from your JSON
