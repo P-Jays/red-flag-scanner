@@ -1,10 +1,14 @@
 import { ImageResponse } from "@vercel/og";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 export const runtime = "edge";
+// Define the type for your params, indicating it's a Promise
+type RouteParams = {
+  params: Promise<{ token: string }>;
+};
 
-export async function GET(req: NextRequest, context: { params: { token: string } }) {
-  const token = context.params.token.toUpperCase();
+export async function GET(req: NextRequest, context: RouteParams) {
+  const { token } = await context.params;
 
   // Example: fetch trust score or use fallback
   let trustScore = "N/A";
@@ -14,8 +18,14 @@ export async function GET(req: NextRequest, context: { params: { token: string }
     );
     const data = await res.json();
     trustScore = data.trustScore || "N/A";
-  } catch {
+    // return NextResponse.json({ message: `OG data for token: ${token}` });
+  } catch (error) {
     trustScore = "N/A";
+    console.error("Error in OG route:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 
   return new ImageResponse(
