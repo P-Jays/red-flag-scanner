@@ -1,6 +1,7 @@
 {
   "token": "XRP",
   "score": "3/5 Red Flags Detected",
+  "trustScore": 3,
   "flags": [
     {
       "title": "No Audit Report",

@@ -1,6 +1,7 @@
 {
   "token": "SOL",
   "score": "1/5 Red Flag Detected",
+  "trustScore": 1,
   "flags": [
     {
       "title": "Validator Centralization",

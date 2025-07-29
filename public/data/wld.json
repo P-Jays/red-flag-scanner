@@ -1,6 +1,7 @@
 {
   "token": "WLD",
   "score": "1 Red, 2 Yellow",
+  "trustScore": 2,
   "flags": [
     {
       "title": "Biometric Data Collection",
