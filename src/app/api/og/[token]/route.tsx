@@ -17,6 +17,7 @@ export async function GET(req: NextRequest, context: RouteParams) {
       `${process.env.NEXT_PUBLIC_SITE_URL}/data/${token.toLowerCase()}.json`
     );
     const data = await res.json();
+    console.log(data);
     trustScore = data.trustScore || "N/A";
     // return NextResponse.json({ message: `OG data for token: ${token}` });
   } catch (error) {
@@ -38,7 +39,7 @@ export async function GET(req: NextRequest, context: RouteParams) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          background: "linear-gradient(135deg, #0f172a, #1e293b)",
+          background: "linear-gradient(135deg, #000000ff, #1e293b)",
           color: "#fff",
           fontFamily: "sans-serif",
           padding: "40px",
@@ -50,8 +51,8 @@ export async function GET(req: NextRequest, context: RouteParams) {
           height="120"
           style={{ marginBottom: "30px" }}
         />
-        <h1 style={{ fontSize: "80px", margin: "0", fontWeight: "bold" }}>{token}</h1>
-        <p style={{ fontSize: "48px", margin: "20px 0", color: "#fbbf24" }}>
+        <h1 style={{ fontSize: "80px", margin: "0", fontWeight: "bold" }}>{token.toUpperCase()}</h1>
+        <p style={{ fontSize: "48px", margin: "20px 0", color: "#ffffffff" }}>
           Trust Score: {trustScore}/10
         </p>
         <p style={{ fontSize: "28px", opacity: 0.8 }}>Red Flag Scanner — MVP</p>
