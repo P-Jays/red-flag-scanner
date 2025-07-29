@@ -38,22 +38,23 @@ export async function GET(req: NextRequest, context: RouteParams) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          background: "#000",
+          background: "linear-gradient(135deg, #0f172a, #1e293b)",
           color: "#fff",
           fontFamily: "sans-serif",
+          padding: "40px",
         }}
       >
         <img
           src={`${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`}
-          width="100"
-          height="100"
-          style={{ marginBottom: "20px" }}
+          width="120"
+          height="120"
+          style={{ marginBottom: "30px" }}
         />
-        <h1 style={{ fontSize: "64px", margin: "0" }}>{token}</h1>
-        <p style={{ fontSize: "40px", margin: "10px 0" }}>
+        <h1 style={{ fontSize: "80px", margin: "0", fontWeight: "bold" }}>{token}</h1>
+        <p style={{ fontSize: "48px", margin: "20px 0", color: "#fbbf24" }}>
           Trust Score: {trustScore}/10
         </p>
-        <p style={{ fontSize: "28px", opacity: 0.7 }}>Red Flag Scanner — MVP</p>
+        <p style={{ fontSize: "28px", opacity: 0.8 }}>Red Flag Scanner — MVP</p>
       </div>
     ),
     { width: 1200, height: 630 }

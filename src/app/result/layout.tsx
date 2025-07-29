@@ -6,17 +6,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Red Flag Scanner — Crypto Trust Score",
     description: "Instantly see trust scores and red flags for any crypto token.",
-    url: "https://red-flag-scanner-ten.vercel.app",
-    siteName: "Red Flag Scanner",
     images: [
       {
-        url: "/api/og/xrp", // Dynamic route
+        url: "/api/og/xrp",
         width: 1200,
         height: 630,
         alt: "Red Flag Scanner Preview",
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
@@ -26,10 +23,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ResultLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ResultLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
