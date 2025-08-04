@@ -1,20 +1,21 @@
 // src/app/scanner/page.tsx
 
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
 
 export default function ScannerPage() {
-  const [token, setToken] = useState('')
-  const router = useRouter()
+  const [token, setToken] = useState("");
+  const router = useRouter();
 
 const handleScan = () => {
-  if (!token) return
-  router.push(`/result?token=${token.toLowerCase()}`)
-} 
+    if (!token) return;
+    router.push(`/result?token=${token.toLowerCase()}`);
+  };
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-4">
@@ -25,7 +26,9 @@ const handleScan = () => {
         onChange={(e) => setToken(e.target.value)}
         className="w-[300px]"
       />
-      <Button variant="default" onClick={handleScan}>Scan Now</Button>
+      <Button variant="default" onClick={handleScan}>
+        Scan Now
+      </Button>
     </main>
-  )
+  );
 }

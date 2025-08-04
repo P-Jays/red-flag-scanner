@@ -88,7 +88,7 @@ export default function ResultPage() {
   const greenCount = data?.flags.filter(
     (f) => f.status && f.status === "green"
   ).length;
-
+  const [supply, setSupply] = useState<number | null>(null);
   // Get token from URL on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -100,6 +100,25 @@ export default function ResultPage() {
         setIsAnalyst(true);
       }
     }
+
+    async function fetchSupply() {
+      try {
+        const res = await fetch(
+          "https://api.coingecko.com/api/v3/coins/ripple"
+        );
+        const data = await res.json();
+        console.table(data);
+        console.log("🟢  "+`${data.id}`+ " Total Supply:", data.market_data.total_supply);
+        console.log("🟢  "+`${data.id}`+ " Circulating Supply:", data.market_data.circulating_supply);
+        setSupply(data.market_data.circulating_supply);
+        // console.log(supply);
+        
+      } catch (err) {
+        console.error("🔴 Error fetching supply:", err);
+      }
+    }
+
+    fetchSupply();
   }, []);
 
   const sources = data?.flags
