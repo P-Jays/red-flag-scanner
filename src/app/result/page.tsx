@@ -111,7 +111,7 @@ export default function ResultPage() {
         console.log("🟢  "+`${data.id}`+ " Total Supply:", data.market_data.total_supply);
         console.log("🟢  "+`${data.id}`+ " Circulating Supply:", data.market_data.circulating_supply);
         setSupply(data.market_data.circulating_supply);
-        // console.log(supply);
+        console.log(supply);
         
       } catch (err) {
         console.error("🔴 Error fetching supply:", err);
