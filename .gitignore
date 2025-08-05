@@ -32,23 +32,23 @@ coverage/
 **/scanner_backend  # compiled binary if ever output outside Docker
 
 # ========================================
-# 🦀 Rust backend (in /backend)
+# 🦀 Rust backend (in /apps/backend)
 # ========================================
-/backend/target/
-/backend/.cargo/
+/apps/backend/target/
+/apps/backend/.cargo/
 **/Cargo.lock.orig
 **/*.rs.bk
 
 # ========================================
 # ⚛️ Frontend (Next.js + React)
 # ========================================
-/frontend/node_modules/
-/frontend/.next/
-/frontend/.turbo/
-/frontend/out/
-/frontend/dist/
-/frontend/.env.local
-/frontend/public/*.map
+/apps/frontend/node_modules/
+/apps/frontend/.next/
+/apps/frontend/.turbo/
+/apps/frontend/out/
+/apps/frontend/dist/
+/apps/frontend/.env.local
+/apps/frontend/public/*.map
 
 # If you build frontend at root (e.g. vercel output)
 .next/
