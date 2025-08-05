@@ -1,41 +1,80 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
+# ========================================
+# 🚀 Global ignores (common to all projects)
+# ========================================
 .DS_Store
-*.pem
+Thumbs.db
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+.env
+.env.*.local
+*.local
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+# ========================================
+# 🔧 Editor and OS files
+# ========================================
+.vscode/
+.idea/
+*.code-workspace
 
-# env files (can opt-in for committing if needed)
-.env*
+# ========================================
+# 🧪 Testing and coverage
+# ========================================
+coverage/
+*.lcov
 
-# vercel
-.vercel
+# ========================================
+# 🐳 Docker related
+# ========================================
+**/.dockerignore
+**/scanner_backend  # compiled binary if ever output outside Docker
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# ========================================
+# 🦀 Rust backend (in /backend)
+# ========================================
+/backend/target/
+/backend/.cargo/
+**/Cargo.lock.orig
+**/*.rs.bk
+
+# ========================================
+# ⚛️ Frontend (Next.js + React)
+# ========================================
+/frontend/node_modules/
+/frontend/.next/
+/frontend/.turbo/
+/frontend/out/
+/frontend/dist/
+/frontend/.env.local
+/frontend/public/*.map
+
+# If you build frontend at root (e.g. vercel output)
+.next/
+out/
+dist/
+
+# ========================================
+# 📦 Package manager files (optional if auto-generated)
+yarn.lock
+pnpm-lock.yaml
+
+# ========================================
+# 📜 Contracts folder (if using Move, Solidity, or similar)
+**/build/
+**/artifacts/
+**/cache/
+
+# ========================================
+# 📚 Logs or analytics dumps
+*.log
+logs/
+*.sqlite3
+*.db
+*.pid
+
+# ========================================
+# 📄 Misc
+*.tgz
+*.zip
