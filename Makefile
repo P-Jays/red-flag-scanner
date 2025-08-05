@@ -3,17 +3,17 @@
 # ===================================
 
 run-frontend:
-	cd frontend && npm run dev
+	cd apps/frontend && npm run dev
 
 run-backend:
-	cd backend && cargo run
+	cd apps/backend && cargo run
 
 # ===================================
 # 🐳 DOCKERIZED BACKEND
 # ===================================
 
 build-backend:
-	cd backend && docker build -t scanner-backend .
+	cd app/backend && docker build -t scanner-backend .
 
 start-backend:
 	docker run -p 4000:4000 scanner-backend
