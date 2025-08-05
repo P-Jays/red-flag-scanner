@@ -1,4 +1,3 @@
 {
-    "src": "apps/frontend",
-    "use": "@vercel/next"
+  "$schema": "https://openapi.vercel.sh/vercel.json"
 }
