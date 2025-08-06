@@ -32,10 +32,15 @@ type ScanResult = {
   }[];
 };
 
+type SupplyData = {
+  token: string;
+  total_supply: number | null;
+  circulating_supply: number | null;
+};
 
 export default function ResultPage() {
   // const router = useRouter();
-  const [token, setToken] = useState<string>("xrp");
+  const [token, setToken] = useState<string>("");
   const [data, setData] = useState<ScanResult | null>(null);
   const calculateTrustScore = (flags: ScanResult["flags"]) => {
     let score = 5;
@@ -88,7 +93,7 @@ export default function ResultPage() {
   const greenCount = data?.flags.filter(
     (f) => f.status && f.status === "green"
   ).length;
-  const [supply, setSupply] = useState<number | null>(null);
+  const [supplyData, setSupplyData] = useState<SupplyData | null>(null);
   // Get token from URL on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -103,23 +108,39 @@ export default function ResultPage() {
 
     async function fetchSupply() {
       try {
-        const res = await fetch(
-          "https://api.coingecko.com/api/v3/coins/ripple"
-        );
+        // Change to your deployed backend URL later
+        // const backendUrl =
+        //   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+        // const res = await fetch(`${backendUrl}/supply/${token}`);
+        const res = await fetch(`/api/supply/${token}`);
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch supply for ${token}`);
+        }
+
         const data = await res.json();
-        console.table(data);
-        console.log("🟢  "+`${data.id}`+ " Total Supply:", data.market_data.total_supply);
-        console.log("🟢  "+`${data.id}`+ " Circulating Supply:", data.market_data.circulating_supply);
-        setSupply(data.market_data.circulating_supply);
-        console.log(supply);
-        
-      } catch (err) {
-        console.error("🔴 Error fetching supply:", err);
+        console.log(data);
+
+        console.log(`🟢 Live Supply for ${data.token}`);
+        console.log(`Total: ${data.total_supply}`);
+        console.log(`Circulating: ${data.circulating_supply}`);
+
+        // Store circulating supply or both values in state as needed
+        setSupplyData({
+          total_supply: data.total_supply,
+          circulating_supply: data.circulating_supply,
+          token: data.token,
+        });
+        // If you want to store both, create a supplyData state object instead
+      } catch (error) {
+        console.error("Error fetching supply:", error);
       }
     }
 
-    fetchSupply();
-  }, []);
+    if (token) {
+      fetchSupply();
+    }
+  }, [token]);
 
   const sources = data?.flags
     ? Array.from(
@@ -132,6 +153,7 @@ export default function ResultPage() {
   useEffect(() => {
     if (token) {
       fetch(`/data/${token}.json`)
+      // fetch(`/scan/${token}`)
         .then((res) => {
           if (!res.ok) throw new Error("Token not found");
           return res.json();
@@ -171,6 +193,24 @@ export default function ResultPage() {
         <h1 className="text-3xl font-bold text-center mb-2">
           🔍Scan Result: {data.token.toUpperCase()}
         </h1>
+        <Card className="mb-4 border-l-4 border-blue-500 bg-blue-50">
+          <CardContent className="p-4">
+            <h2 className="font-semibold">Live Token Supply</h2>
+            <p>
+              <strong>Total Supply:</strong>{" "}
+              {supplyData?.total_supply
+                ? supplyData.total_supply.toLocaleString()
+                : "N/A"}
+            </p>
+            <p>
+              <strong>Circulating Supply:</strong>{" "}
+              {supplyData?.circulating_supply
+                ? supplyData.circulating_supply.toLocaleString()
+                : "N/A"}
+            </p>
+            <span className="text-xs text-green-600 font-semibold">LIVE</span>
+          </CardContent>
+        </Card>
         <p className="text-muted-foreground text-center mb-6">{data.score}</p>
         <div className="flex items-center gap-2 mb-6">
           <Switch checked={isAnalyst} onCheckedChange={handleToggle} />
