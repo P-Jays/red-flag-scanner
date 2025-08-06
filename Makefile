@@ -13,7 +13,7 @@ run-backend:
 # ===================================
 
 build-backend:
-	cd apps/backend && docker build -t scanner-backend .
+	docker build -t scanner-backend .
 
 start-backend:
 	docker run -p 4000:4000 scanner-backend
