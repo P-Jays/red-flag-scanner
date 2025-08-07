@@ -19,7 +19,7 @@ start-backend:
 	docker run -p 4000:4000 scanner-backend
 
 stop-backend:
-	docker stop $$(docker ps -q --filter ancestor=scanner-backend)
+	cd apps/backend && docker stop $$(docker ps -q --filter ancestor=scanner-backend)
 
 restart-backend:
 	make stop-backend && make start-backend
