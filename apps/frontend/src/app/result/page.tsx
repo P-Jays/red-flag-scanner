@@ -193,7 +193,7 @@ export default function ResultPage() {
         <h1 className="text-3xl font-bold text-center mb-2">
           🔍Scan Result: {data.token.toUpperCase()}
         </h1>
-        <Card className="mb-4 border-l-4 border-blue-500 bg-blue-50">
+        <Card className="mb-4 border-l-4 border-blue-500">
           <CardContent className="p-4">
             <h2 className="font-semibold">Live Token Supply</h2>
             <p>
