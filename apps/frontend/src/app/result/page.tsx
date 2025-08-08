@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { LiveSupplyCard } from "@/components/LiveSupplyCard";
 // import ReactToPrint from "react-to-print";
 // import PrintableResult from "@/components/PrintableResult"; // adjust path
 
@@ -94,6 +95,8 @@ export default function ResultPage() {
     (f) => f.status && f.status === "green"
   ).length;
   const [supplyData, setSupplyData] = useState<SupplyData | null>(null);
+  const [supplyLoading, setSupplyLoading] = useState(false);
+  const [supplyError, setSupplyError] = useState<string | null>(null);
   // Get token from URL on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -105,35 +108,48 @@ export default function ResultPage() {
         setIsAnalyst(true);
       }
     }
-
+    if (!token) return;
     async function fetchSupply() {
+      // try {
+      //   const res = await fetch(`/api/supply/${token}`);
+
+      //   if (!res.ok) {
+      //     throw new Error(`Failed to fetch supply for ${token}`);
+      //   }
+
+      //   const data = await res.json();
+      //   console.log(data);
+
+      //   console.log(`🟢 Live Supply for ${data.token}`);
+      //   console.log(`Total: ${data.total_supply}`);
+      //   console.log(`Circulating: ${data.circulating_supply}`);
+
+      //   // Store circulating supply or both values in state as needed
+      //   setSupplyData({
+      //     total_supply: data.total_supply,
+      //     circulating_supply: data.circulating_supply,
+      //     token: data.token,
+      //   });
+      //   // If you want to store both, create a supplyData state object instead
+      // } catch (error) {
+      //   console.error("Error fetching supply:", error);
+      // }
       try {
-        // Change to your deployed backend URL later
-        // const backendUrl =
-        //   process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
-        // const res = await fetch(`${backendUrl}/supply/${token}`);
+        setSupplyLoading(true);
+        setSupplyError(null);
         const res = await fetch(`/api/supply/${token}`);
-
-        if (!res.ok) {
-          throw new Error(`Failed to fetch supply for ${token}`);
-        }
-
+        if (!res.ok) throw new Error(`Failed to fetch supply for ${token}`);
         const data = await res.json();
-        console.log(data);
-
-        console.log(`🟢 Live Supply for ${data.token}`);
-        console.log(`Total: ${data.total_supply}`);
-        console.log(`Circulating: ${data.circulating_supply}`);
-
-        // Store circulating supply or both values in state as needed
         setSupplyData({
           total_supply: data.total_supply,
           circulating_supply: data.circulating_supply,
           token: data.token,
         });
-        // If you want to store both, create a supplyData state object instead
       } catch (error) {
+        // setSupplyError(error);
         console.error("Error fetching supply:", error);
+      } finally {
+        setSupplyLoading(false);
       }
     }
 
@@ -153,7 +169,7 @@ export default function ResultPage() {
   useEffect(() => {
     if (token) {
       fetch(`/data/${token}.json`)
-      // fetch(`/scan/${token}`)
+        // fetch(`/scan/${token}`)
         .then((res) => {
           if (!res.ok) throw new Error("Token not found");
           return res.json();
@@ -180,11 +196,11 @@ export default function ResultPage() {
 
   return (
     <div className="relative">
-      {isAnalyst && (
+      {/* {isAnalyst && (
         <div className="absolute top-4 right-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-md z-10">
           Analyst Mode ON
         </div>
-      )}
+      )} */}
       <main
         className={`max-w-screen-md mx-auto px-4 py-8 transition-colors duration-300 ${
           isAnalyst ? "bg-blue-50" : ""
@@ -193,7 +209,14 @@ export default function ResultPage() {
         <h1 className="text-3xl font-bold text-center mb-2">
           🔍Scan Result: {data.token.toUpperCase()}
         </h1>
-        <Card className="mb-4 border-l-4 border-blue-500">
+        <LiveSupplyCard
+          token={token}
+          total={supplyData?.total_supply}
+          circulating={supplyData?.circulating_supply}
+          loading={supplyLoading}
+          error={supplyError}
+        />
+        {/* <Card className="mb-4 border-l-4 border-blue-500">
           <CardContent className="p-4">
             <h2 className="font-semibold">Live Token Supply</h2>
             <p>
@@ -210,7 +233,7 @@ export default function ResultPage() {
             </p>
             <span className="text-xs text-green-600 font-semibold">LIVE</span>
           </CardContent>
-        </Card>
+        </Card> */}
         <p className="text-muted-foreground text-center mb-6">{data.score}</p>
         <div className="flex items-center gap-2 mb-6">
           <Switch checked={isAnalyst} onCheckedChange={handleToggle} />
