@@ -33,11 +33,11 @@ type ScanResult = {
   }[];
 };
 
-type SupplyData = {
-  token: string;
-  total_supply: number | null;
-  circulating_supply: number | null;
-};
+// type SupplyData = {
+//   token: string;
+//   total_supply: number | null;
+//   circulating_supply: number | null;
+// };
 
 export default function ResultPage() {
   // const router = useRouter();
@@ -94,9 +94,9 @@ export default function ResultPage() {
   const greenCount = data?.flags.filter(
     (f) => f.status && f.status === "green"
   ).length;
-  const [supplyData, setSupplyData] = useState<SupplyData | null>(null);
-  const [supplyLoading, setSupplyLoading] = useState(false);
-  const [supplyError, setSupplyError] = useState<string | null>(null);
+  // const [supplyData, setSupplyData] = useState<SupplyData | null>(null);
+  // const [supplyLoading, setSupplyLoading] = useState(false);
+  // const [supplyError, setSupplyError] = useState<string | null>(null);
   // Get token from URL on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -108,55 +108,32 @@ export default function ResultPage() {
         setIsAnalyst(true);
       }
     }
-    if (!token) return;
-    async function fetchSupply() {
-      // try {
-      //   const res = await fetch(`/api/supply/${token}`);
+    // if (!token) return;
+    // async function fetchSupply() {
+    //   try {
+    //     setSupplyLoading(true);
+    //     setSupplyError(null);
+    //     const res = await fetch(`/api/supply/${token}`);
+    //     if (!res.ok) throw new Error(`Failed to fetch supply for ${token}`);
+    //     const data = await res.json();
+    //     setSupplyData({
+    //       total_supply: data.total_supply,
+    //       circulating_supply: data.circulating_supply,
+    //       token: data.token,
+    //     });
+    //     console.log(supplyData, supplyLoading, supplyError);
+    //   } catch (error) {
+    //     // setSupplyError(error);
+    //     console.error("Error fetching supply:", error);
+    //   } finally {
+    //     setSupplyLoading(false);
+    //   }
+    // }
 
-      //   if (!res.ok) {
-      //     throw new Error(`Failed to fetch supply for ${token}`);
-      //   }
-
-      //   const data = await res.json();
-      //   console.log(data);
-
-      //   console.log(`🟢 Live Supply for ${data.token}`);
-      //   console.log(`Total: ${data.total_supply}`);
-      //   console.log(`Circulating: ${data.circulating_supply}`);
-
-      //   // Store circulating supply or both values in state as needed
-      //   setSupplyData({
-      //     total_supply: data.total_supply,
-      //     circulating_supply: data.circulating_supply,
-      //     token: data.token,
-      //   });
-      //   // If you want to store both, create a supplyData state object instead
-      // } catch (error) {
-      //   console.error("Error fetching supply:", error);
-      // }
-      try {
-        setSupplyLoading(true);
-        setSupplyError(null);
-        const res = await fetch(`/api/supply/${token}`);
-        if (!res.ok) throw new Error(`Failed to fetch supply for ${token}`);
-        const data = await res.json();
-        setSupplyData({
-          total_supply: data.total_supply,
-          circulating_supply: data.circulating_supply,
-          token: data.token,
-        });
-      } catch (error) {
-        // setSupplyError(error);
-        console.error("Error fetching supply:", error);
-      } finally {
-        setSupplyLoading(false);
-      }
-    }
-
-    if (token) {
-      fetchSupply();
-    }
-  }, [token]);
+    // if (token) {
+    //   fetchSupply();
+    // }
+  }, []);
 
   const sources = data?.flags
     ? Array.from(
@@ -209,12 +186,15 @@ export default function ResultPage() {
         <h1 className="text-3xl font-bold text-center mb-2">
           🔍Scan Result: {data.token.toUpperCase()}
         </h1>
-        <LiveSupplyCard
+        {/* <LiveSupplyCard
           token={token}
           total={supplyData?.total_supply}
           circulating={supplyData?.circulating_supply}
           loading={supplyLoading}
           error={supplyError}
+        /> */}
+          <LiveSupplyCard
+          token={token}
         />
         {/* <Card className="mb-4 border-l-4 border-blue-500">
           <CardContent className="p-4">

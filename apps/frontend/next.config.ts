@@ -2,29 +2,29 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  async headers() {
-    return [
-      {
-        // Match API routes we want CORS for
-        source: '/api/:path*',
-        headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
-          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' }
-        ],
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       // Match API routes we want CORS for
+  //       source: '/api/:path*',
+  //       headers: [
+  //         { key: 'Access-Control-Allow-Origin', value: '*' },
+  //         { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
+  //         { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' }
+  //       ],
+  //     },
+  //   ];
+  // },
 
   // Optional: Proxy /api requests to Rust backend
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination:  `${process.env.NEXT_PUBLIC_BACKEND_URL}/:path*`,
-      }
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/api/:path*',
+  //       destination:  `${process.env.NEXT_PUBLIC_BACKEND_URL}/:path*`,
+  //     }
+  //   ];
+  // },
 };
 
 export default nextConfig;
