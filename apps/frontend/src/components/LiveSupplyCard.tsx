@@ -1,28 +1,18 @@
-// apps/frontend/src/components/LiveSupplyCard.tsx
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
-// import { Badge } from "@/components/ui/badge";
-// import { formatNum } from "@/lib/format";
 import { Button } from "@/components/ui/button";
-type Supply = { token: string; total_supply: number | null; circulating_supply: number | null };
-type Cached = { data: Supply; savedAt: number }; // epoch ms
 import useSWR from "swr";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-// type Props = {
-//   token: string;
-//   total?: number | null;
-//   circulating?: number | null;
-//   loading?: boolean;
-//   error?: string | null;
-// };
+type Supply = { token: string; total_supply: number | null; circulating_supply: number | null };
+type Cached = { data: Supply; savedAt: number };
 
-const fetcher = (url: string) => fetch(url).then(r => {
-  if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  return r.json();
-});
+const fetcher = (url: string) =>
+  fetch(url).then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  });
 
-// localStorage helpers (safe on server)
 const readCache = (key: string): Cached | null => {
   if (typeof window === "undefined") return null;
   try { return JSON.parse(localStorage.getItem(key) || "null"); } catch { return null; }
@@ -44,66 +34,59 @@ const fmtAgo = (t?: number) => {
 
 export function LiveSupplyCard({ token }: { token: string }) {
   const cacheKey = `supply:${token.toLowerCase()}`;
-  const cached = readCache(cacheKey);
 
-  // keep a local copy of when our currently shown data was saved
-  const [savedAt, setSavedAt] = useState<number | undefined>(cached?.savedAt);
+  // ✅ Read cache once per token; stable reference
+  const initialCache = useMemo(() => readCache(cacheKey), [cacheKey]);
+  const [savedAt, setSavedAt] = useState<number | undefined>(initialCache?.savedAt);
+
+  // ✅ Pass a stable fallbackData reference
+  const fallbackData = useMemo(() => initialCache?.data, [initialCache]);
 
   const { data, error, isValidating, mutate } = useSWR<Supply>(
     token ? `/api/supply/${token}` : null,
     fetcher,
     {
-      // seed with last good value if present
-      fallbackData: cached?.data,
-      refreshInterval: 60_000,       // auto refresh every 60s
-      revalidateOnFocus: true,       // refresh when tab refocuses
+      fallbackData,              // stable across renders
+      refreshInterval: 60_000,
+      revalidateOnFocus: true,
       shouldRetryOnError: true,
       errorRetryInterval: 10_000,
     }
   );
 
-  // When we get fresh data, persist it
+  // ✅ Only runs when `data` actually changes
   useEffect(() => {
     if (!data) return;
-    writeCache(cacheKey, { data, savedAt: Date.now() });
-    setSavedAt(Date.now());
+    const now = Date.now();
+    writeCache(cacheKey, { data, savedAt: now });
+    setSavedAt(now);
   }, [data, cacheKey]);
 
   const total = data?.total_supply ?? null;
-  const circ  = data?.circulating_supply ?? null;
+  const circ = data?.circulating_supply ?? null;
 
-  // Are we showing cached only (either first load from cache or fetch error)?
-  const showingCached = !isValidating && !!cached && (!data || !!error);
+  const showingCached =
+    !!initialCache &&
+    (!data || JSON.stringify(data) === JSON.stringify(initialCache.data));
 
   return (
     <Card className="mb-4 border-blue-200">
       <CardContent className="p-4">
+        {/* header */}
         <div className="flex items-center justify-between">
           <h3 className="font-semibold">Live Token Supply</h3>
           <div className="flex items-center gap-2">
-            <span className={`text-xs px-2 py-1 rounded ${
-              isValidating ? "bg-gray-200 text-gray-700" : "bg-green-100 text-green-700"
-            }`}>
+            <span className={`text-xs px-2 py-1 rounded ${isValidating ? "bg-gray-200 text-gray-700" : "bg-green-100 text-green-700"}`}>
               {isValidating ? "Refreshing…" : "LIVE"}
             </span>
             {showingCached && (
-              <span className="text-xs px-2 py-1 rounded bg-amber-100 text-amber-800">
-                Cached
-              </span>
+              <span className="text-xs px-2 py-1 rounded bg-amber-100 text-amber-800">Cached</span>
             )}
-            <Button variant="outline" size="sm" onClick={() => mutate()}>
-              Refresh
-            </Button>
+            <Button variant="outline" size="sm" onClick={() => mutate()}>Refresh</Button>
           </div>
         </div>
 
-        {/* States */}
-        {error && !data && (
-          <p className="mt-3 text-sm text-red-600">
-            Couldn’t reach backend. Showing cached data if available.
-          </p>
-        )}
-
+        {error && !data && <p className="mt-3 text-sm text-red-600">Couldn’t reach backend. Showing cached data if available.</p>}
         {!data && !error && (
           <div className="mt-3 animate-pulse">
             <div className="h-4 bg-gray-200 rounded w-48 mb-2" />
@@ -113,10 +96,10 @@ export function LiveSupplyCard({ token }: { token: string }) {
 
         {data && (
           <div className="mt-3 text-sm">
-            <p><strong>Total Supply:</strong> {total ? total.toLocaleString() : "N/A"}</p>
-            <p><strong>Circulating Supply:</strong> {circ ? circ.toLocaleString() : "N/A"}</p>
+            <p><strong>Total Supply:</strong> {total == null ? "N/A" : total.toLocaleString()} {token.toUpperCase()}</p>
+            <p><strong>Circulating Supply:</strong> {circ == null ? "N/A" : circ.toLocaleString()} {token.toUpperCase()}</p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Source: backend (Fly.io) • Last updated {fmtAgo(savedAt ?? cached?.savedAt)}
+              Source: backend • Last updated {fmtAgo(savedAt ?? initialCache?.savedAt)}
             </p>
           </div>
         )}
